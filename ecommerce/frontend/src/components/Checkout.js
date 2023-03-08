@@ -68,7 +68,11 @@ const Checkout = ({  }) => {
                 <CartaoCredito/>
             </div>
             <Carrinho items={produtos} />
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-between mt-4 gap-2">
+                <div>
+                    <p className="inline-block bold mr-2">Total:</p>
+                    <p className="inline-block">R$ 200,00</p>
+                </div>
                 <button
                     onClick={() => setShowModal(true)}
                     className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">

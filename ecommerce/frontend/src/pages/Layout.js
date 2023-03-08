@@ -8,7 +8,9 @@ function Layout(props) {
         <div className="flex flex-col h-screen">
         <header className="bg-gray-800 py-4">
           <nav className="container mx-auto flex justify-between items-center">
-            <a href="#" className="text-white text-xl font-bold">E-commerce</a>
+            <Link exact to="/"> 
+              <p className="text-white text-xl font-bold">E-commerce</p> 
+            </Link>
             <div className="flex items-center">
                 <form action="#" className="relative">
                 <input type="text" placeholder="Buscar produtos" className="bg-gray-700 py-2 px-3 rounded-full text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
@@ -24,7 +26,9 @@ function Layout(props) {
                       <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Início</a></li>
                     </Link>
                     <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Login</a></li>
-                    <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Cadastrar Produtos</a></li>
+                    <Link to="/adicionar-produto">
+                      <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Cadastrar Produtos</a></li>
+                    </Link>
                     <li className="ml-6">
                     <Link to="/checkout">
                         <IconButton aria-label="Carrinho de compras" color="primary">
@@ -33,7 +37,6 @@ function Layout(props) {
                             </Badge>
                         </IconButton>
                     </Link>
-                    
                     </li>
                 </ul>
             </div>
