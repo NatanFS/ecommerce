@@ -7,5 +7,6 @@ urlpatterns = [
     path('adicionar-produto', index, name='index'),
     path('login', index, name='index'),
     path('perfil', index, name='index'),
+    path('cadastro', index, name='index'),
 
 ]

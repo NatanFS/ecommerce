@@ -25,10 +25,10 @@ const AdicionarProdutoForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Add Product</h2>
+      <h2 className="text-2xl font-bold mb-4">Adicionar Produto</h2>
       <div className="mb-4">
         <label htmlFor="nome" className="block font-medium mb-2">
-          Name
+          Nome
         </label>
         <input
           type="text"
@@ -41,7 +41,7 @@ const AdicionarProdutoForm = () => {
       </div>
       <div className="mb-4">
         <label htmlFor="descricao" className="block font-medium mb-2">
-          Description
+          Descricao
         </label>
         <textarea
           id="descdription"
@@ -53,7 +53,7 @@ const AdicionarProdutoForm = () => {
       </div>
       <div className="mb-4">
         <label htmlFor="preco" className="block font-medium mb-2">
-          Price
+          Preço
         </label>
         <input
           type="number"
@@ -66,7 +66,7 @@ const AdicionarProdutoForm = () => {
       </div>
       <div className="mb-4">
         <label htmlFor="imagem" className="block font-medium mb-2">
-          Image
+          Imagem
         </label>
         <input
           type="file"

@@ -25,7 +25,18 @@ function Layout(props) {
                     <Link exact to="/">
                       <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Início</a></li>
                     </Link>
-                    <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Login</a></li>
+                    <Link to="/login">
+                      <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Login</a></li>
+                    </Link>
+                    <Link to="/cadastro">
+                      <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Cadastro</a></li>
+                    </Link>
+                    <Link to="/perfil">
+                      <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Perfil</a></li>
+                    </Link>
+                    <Link to="/logout">
+                      <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Sair</a></li>
+                    </Link>
                     <Link to="/adicionar-produto">
                       <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Cadastrar Produtos</a></li>
                     </Link>

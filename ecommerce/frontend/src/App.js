@@ -2,13 +2,16 @@ import React from "react";
 import {render} from "react-dom";
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import RoutesComponent from './routes';
+import { AuthProvider } from "./services/autenticacao";
 const theme = createTheme();
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <RoutesComponent/>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <RoutesComponent/>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
   
