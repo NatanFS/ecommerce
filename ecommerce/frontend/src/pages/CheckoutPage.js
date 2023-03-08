@@ -1,13 +1,13 @@
 import React from "react";
-import Carrinho from "../components/Carrinho";
+import Checkout from "../components/Checkout";
 import Layout from "./Layout";
 
 function CheckoutPage() {
     return (
         <div>
             <Layout>
-                <h1>Checkout</h1>
-                <Carrinho/>
+                <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+                <Checkout/>
             </Layout>
         </div>
     );

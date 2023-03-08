@@ -1,7 +1,45 @@
 import React, { useState } from "react";
 import Carrinho from "./Carrinho";
+import CartaoCredito from "./CartaoCredito";
+import Endereco from "./Endereco";
 
-const Checkout = ({ items, updateItemQuantity }) => {
+const Checkout = ({  }) => {
+
+    const produtos = [
+        {
+          produto: {
+            id: 1,
+            nome: "Produto 1",
+            descricao: "Descrição do produto 1",
+            preco: 10,
+            imagem: "https://images-na.ssl-images-amazon.com/images/I/51bnrgemNdL._AC_UL675_SR675,480_.jpg",
+          },
+          quantidade: 1
+        },
+        {
+          produto: {
+            id: 2,
+            nome: "Produto 2",
+            descricao: "Descrição do produto 2",
+            preco: 20,
+            imagem: "https://images-na.ssl-images-amazon.com/images/I/71R73h01XHL._AC_UL675_SR675,480_.jpg",
+            quantidade: 1
+          },
+          quantidade: 1
+        },
+        {
+            produto: {
+                id: 3,
+                nome: "Produto 3",
+                descricao: "Descrição do produto 3",
+                preco: 30,
+                imagem: "https://images-na.ssl-images-amazon.com/images/I/81wfdDTIjHS._AC_UL200_SR200,200_.jpg",
+                quantidade: 1
+            },
+            quantidade: 1
+        }
+    ]
+
     const [showModal, setShowModal] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -25,85 +63,45 @@ const Checkout = ({ items, updateItemQuantity }) => {
 
     return (
         <div>
-            <Carrinho items={items} updateItemQuantity={updateItemQuantity} />
+            <div className="flex items-center justify-between my-2 gap-2">
+                <Endereco/>
+                <CartaoCredito/>
+            </div>
+            <Carrinho items={produtos} />
             <div className="flex justify-end mt-4">
                 <button
                     onClick={() => setShowModal(true)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-                >
-                    Checkout
+                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                    Comprar
                 </button>
             </div>
             {showModal && (
                 <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded c">
-                        <h2 className="text-lg font-medium mb-4">Checkout</h2>
-                        <div className="mb-4">
-                            <label className="blocktext-gray-700 font-medium mb-2" htmlFor="name">Name:</label>
-                            <input
-                                className="w-full border border-gray-400 p-2 rounded-md"
-                                type="text"
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
+                    <div className="w-[460px] bg-white p-6 rounded c">
+                        <h2 className="text-lg font-medium mb-4">Confirmar compra</h2>
+                        <p>Resumo do pedido: </p>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p>1 x Produto 1</p>
+                            </div>
+                            <div>
+                               <p>R$ 180,00</p>
+                            </div>
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 font-medium mb-2" htmlFor="email">Email:</label>
-                            <input
-                                className="w-full border border-gray-400 p-2 rounded-md"
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+                        <div className="flex items-center justify-between">
+                            <p className="bold">Total: </p>
+                            <p>R$ 180,00</p>
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 font-medium mb-2" htmlFor="cardNumber">Card Number:</label>
-                            <input
-                                className="w-full border border-gray-400 p-2 rounded-md"
-                                type="text"
-                                id="cardNumber"
-                                value={cardNumber}
-                                onChange={(e) => setCardNumber(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 font-medium mb-2" htmlFor="cardExpMonth">Expiration Month:</label>
-                            <input
-                                className="w-full border border-gray-400 p-2 rounded-md"
-                                type="text"
-                                id="cardExpMonth"
-                                value={cardExpMonth}
-                                onChange={(e) => setCardExpMonth(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 font-medium mb-2" htmlFor="cardExpYear">Expiration Year:</label>
-                            <input
-                                className="w-full border border-gray-400 p-2 rounded-md"
-                                type="text"
-                                id="cardExpYear"
-                                value={cardExpYear}
-                                onChange={(e) => setCardExpYear(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 font-medium mb-2" htmlFor="cardCvv">CVV:</label>
-                            <input
-                                className="w-full border border-gray-400 p-2 rounded-md"
-                                type="text"
-                                id="cardCvv"
-                                value={cardCvv}
-                                onChange={(e) => setCardCvv(e.target.value)}
-                            />
-                        </div>
-                        <div className="flex justify-end">
+                        <div className="flex justify-end gap-2 mt-3">
                             <button
                                 onClick={handleCheckout}
-                                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-                            >
-                                Checkout
+                                className="bg-white border border-blue-600 text-blue-600 hover: py-2 px-4 rounded">
+                                Voltar
+                            </button>
+                            <button
+                                onClick={handleCheckout}
+                                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                                Confirmar
                             </button>
                         </div>
                     </div>
