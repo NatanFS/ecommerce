@@ -9,7 +9,7 @@ const Carrinho = (props) => {
                         <img src={item.produto.imagem} alt={item.produto.nome} className="h-16 w-16 mr-4" />
                         <div>
                             <p className="font-medium">{item.produto.nome}</p>
-                            <p className="text-gray-600">{item.produto.preco}</p>
+                            <p className="text-gray-600">{item.produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                         </div>
                     </div>
                     <div className="flex items-center justify-between my-2 gap-2">
