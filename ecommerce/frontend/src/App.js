@@ -1,10 +1,11 @@
 import React from "react";
 import {render} from "react-dom";
+import HomePage from "./pages/HomePage";
 
 function App() {
     return (
       <div>
-        <h1 className="text-purple-700">Hello, World!</h1>
+        <HomePage></HomePage>
       </div>
     );
   }
