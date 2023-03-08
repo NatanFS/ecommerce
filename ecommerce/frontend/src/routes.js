@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AdicionarProdutoForm from "./components/AdicionarProdutoForm";
 import AdicionarProdutoPage from "./pages/AdicionarProduto";
 import CheckoutPage from "./pages/CheckoutPage";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import PaginaProduto from "./pages/PaginaProduto";
+import PerfilUsuarioPage from "./pages/UsuarioPage";
 
 const RoutesComponent= () => {
     return (
@@ -14,6 +15,8 @@ const RoutesComponent= () => {
                 <Route path="/checkout" element = { <CheckoutPage/> }/>
                 <Route path="/produto/:id" element = { <PaginaProduto/> }/>
                 <Route path="/adicionar-produto" element = { <AdicionarProdutoPage/> }/>
+                <Route path="/login" element = { <LoginPage/> }/>
+                <Route path="/perfil" element = { <PerfilUsuarioPage/> }/>
             </Routes>
         </BrowserRouter>
     )
