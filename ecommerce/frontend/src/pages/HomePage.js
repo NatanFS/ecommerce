@@ -1,4 +1,7 @@
 import React from "react";
+import ProductList from "../components/ListaProdutos";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { IconButton, Badge } from '@material-ui/core';
 
 function HomePage() {
     return (
@@ -19,14 +22,20 @@ function HomePage() {
                 <ul className="flex items-center">
                     <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Início</a></li>
                     <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Login</a></li>
-                    <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Carrinho</a></li>
+                    <li className="ml-6">
+                    <IconButton aria-label="Carrinho de compras" color="primary">
+                        <Badge badgeContent={0} color="secondary" className="text-blue-500">
+                        <ShoppingCartIcon />
+                        </Badge>
+                    </IconButton>
+                    </li>
                 </ul>
             </div>
             
           </nav>
         </header>
         <main className="flex-1 container mx-auto py-8">
-            
+            <ProductList/>
         </main>
         <footer className="bg-gray-800 py-4">
           <p className="text-white text-center">&copy; E-commerce</p>
