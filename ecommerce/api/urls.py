@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path('api-auth-token', views.CustomAuthToken.as_view(), name='auth-token'),
+    path('usuario', views.UserDataView.as_view(), name='dados-usuario'),
 ]

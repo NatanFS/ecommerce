@@ -8,6 +8,8 @@ function AdicionarProdutoPage() {
 
     if (!authenticated) {
         return (<Layout><div>Faça login para visualizar essa página</div></Layout>)
+    } else if (!user.is_staff){
+        (<Layout><div>Você não tem permissão para ver essa página.</div></Layout>)
     }
 
     return (
