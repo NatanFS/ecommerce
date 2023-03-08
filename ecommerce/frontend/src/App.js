@@ -1,14 +1,13 @@
 import React from "react";
 import {render} from "react-dom";
-import HomePage from "./pages/HomePage";
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
-
+import RoutesComponent from './routes';
 const theme = createTheme();
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <HomePage/>
+      <RoutesComponent/>
     </ThemeProvider>
   );
 }
