@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Layout from './Layout';
+import axios from 'axios';
 
 function CadastroPage() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ function CadastroPage() {
     confirmPassword: ''
   });
 
+  const [message, setMessage] = useState("")
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -17,10 +20,34 @@ function CadastroPage() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // do something with the form data, such as sending it to a server
-    console.log(formData);
+  
+    const validationError = validateForm();
+    if (validationError) {
+      setMessage(validationError);
+      return;
+    }
+    axios.post("/api/cadastrar", formData)
+    .then(response => {
+      console.log(response.data);
+      setMessage("Cadastro realizado com sucesso!");
+    })
+    .catch(error => {
+      console.error(error);
+      setMessage("Ocorreu um erro ao cadastrar. Por favor, tente novamente mais tarde.");
+    });
+  };
+
+  const validateForm = () => {
+    const { nome, email, password, confirmPassword } = formData;
+    if (!nome || !email || !password || !confirmPassword) {
+      return "Por favor, preencha todos os campos";
+    }
+    if (password !== confirmPassword) {
+      return "As senhas não coincidem";
+    }
+    return null;
   };
 
   return (
@@ -28,6 +55,7 @@ function CadastroPage() {
         <div className="max-w-md mx-auto mt-4">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h2 className="text-center text-2xl font-medium mb-4">Cadastro</h2>
+        {message && (<p>{message}</p>)}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
@@ -64,8 +92,8 @@ function CadastroPage() {
             <input
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="password"
-              id="senha"
-              name="senha"
+              id="password"
+              name="password"
               value={formData.senha}
               onChange={handleInputChange}
               required
@@ -78,8 +106,8 @@ function CadastroPage() {
             <input
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="password"
-              id="confirmarSenha"
-              name="confirmarSenha"
+              id="confirmPassword"
+              name="confirmPassword"
               value={formData.confirmarSenha}
               onChange={handleInputChange}
               required

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AdicionarProdutoForm from "../components/AdicionarProdutoForm";
 import { useAuth } from "../services/autenticacao";
 import Layout from "./Layout";

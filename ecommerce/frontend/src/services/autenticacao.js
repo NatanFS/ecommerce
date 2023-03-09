@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
+    const [message, setMessage] = useState("")
 
     const login = async (email, password) => {
         try {
@@ -20,8 +20,9 @@ const AuthProvider = ({ children }) => {
                 headers: { Authorization: `Token ${token}` },
             });
             setUser(userResponse.data);
-            
+            setMessage("Login realizado com sucesso!");
         } catch (error) {
+            setMessage("Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente.");
             console.error(error);
         }
     };
@@ -40,16 +41,16 @@ const AuthProvider = ({ children }) => {
             axios.get('api/usuario', {
                 headers: { Authorization: `Token ${token}` },
             })
-            .then(response => setUser(response.data))
-            .catch(error => {
-                console.error(error);
-                logout();
-            });
+                .then(response => setUser(response.data))
+                .catch(error => {
+                    console.error(error);
+                    logout();
+                });
         }
     }, []);
 
     return (
-        <AuthContext.Provider value={{ authenticated, user, login, logout }}>
+        <AuthContext.Provider value={{ authenticated, user, login, logout, message }}>
             {children}
         </AuthContext.Provider>
     );

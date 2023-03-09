@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useAuth } from '../services/autenticacao';
 import Layout from './Layout';
-
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useAuth();
-
+    const { authenticated, login, message } = useAuth();
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
         login(email, password)
-        console.log('Email:', email);
-        console.log('Password:', password);
     };
+
+    if (authenticated){
+        navigate(`/`);
+    }
 
     return (
         <Layout>
@@ -23,6 +25,9 @@ function LoginPage() {
 
                     <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                         <h2 className="mb-6 text-3xl font-extrabold text-gray-900">Faça login</h2>
+                        {message && (
+                            <p>{message}</p>
+                        )}
                         <form className="space-y-6" onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
