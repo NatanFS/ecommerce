@@ -84,7 +84,7 @@ const ListaProdutos = () => {
                 <p className="font-bold text-lg mt-2">{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
             </div>
             <div className="flex justify-between items-center px-3 py-4">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                 Adicionar ao carrinho
                 </button>
                 <div className="pr-2">
