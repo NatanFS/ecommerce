@@ -7,10 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
-from django.views.decorators.csrf import csrf_exempt
 
 class CustomAuthToken(ObtainAuthToken):
-    @csrf_exempt
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={'request': request})
         print(request.data)
@@ -21,12 +19,10 @@ class CustomAuthToken(ObtainAuthToken):
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class UserDataView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    @csrf_exempt
     def get(self, request, *args, **kwargs):
         user = request.user
         data = {
@@ -38,11 +34,9 @@ class UserDataView(APIView):
         print(data)
         return Response(data)
 
-
 User = get_user_model()
 
 class CadastrarCliente(APIView):
-    @csrf_exempt
     def post(self, request):
         print(request.data)
         email = request.data.get('email')
@@ -61,4 +55,3 @@ class CadastrarCliente(APIView):
         user.save()
         
         return Response({'message': 'Cliente registrado com sucesso.'}, status=status.HTTP_201_CREATED)
-

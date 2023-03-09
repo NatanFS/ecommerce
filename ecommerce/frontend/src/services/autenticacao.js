@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
     const [message, setMessage] = useState("")
-    const csrftoken = document.cookie.match(/csrftoken=([\w-]+)/)[1];
-
 
     const login = async (email, password) => {
         try {
@@ -18,7 +17,6 @@ const AuthProvider = ({ children }) => {
             const response = await axios.post('/api/api-auth-token', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'X-CSRFToken': csrftoken
                 }
             });
             const { token } = response.data;
