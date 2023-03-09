@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { api, useAuth } from '../services/autenticacao';
 import Layout from './Layout';
+import { Link } from "react-router-dom";
 
 function PerfilUsuarioPage({ }) {
     const { authenticated, user, logout } = useAuth();
@@ -60,14 +61,19 @@ function PerfilUsuarioPage({ }) {
                                     <ul className="divide-y divide-gray-200">
                                         {compras.map((compra) => (
                                             <li key={compra.id} className="py-4 sm:py-5">
+                                                <div className='flex justify-between py-1'> 
+                                                    <div>Pedido {compra.id}</div>
+                                                    <div className="text-sm text-gray-500">{new Date(compra.data_pedido).toLocaleDateString()}</div>
+                                                </div>
                                                 {compra.itens.map((item) => (
                                                     <>
-                                                        <div key={item.id} className="flex justify-between">
-                                                            <div className="text-sm font-medium text-gray-900">{item.produto.nome}</div>
-                                                            <div className="text-sm text-gray-500">{new Date(compra.data_pedido).toLocaleDateString()}</div>
-                                                        </div>
-                                                        <div className="mt-1 text-sm text-gray-600 truncate line-clamp-2">{item.produto.descricao}</div>
-                                                        <div className="mt-1 text-sm text-gray-600">{item.quantidade} x {item.produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+                                                        <Link to={`/produto/${item.produto.id}`}>
+                                                            <div key={item.id} className="flex justify-between pt-2">
+                                                                <div className="text-sm font-medium text-gray-900">{item.produto.nome}</div>
+                                                            </div>
+                                                        </Link>
+                                                        <div className="mt-1 text-sm text-gray-600 truncate line-clamp-2 py-1">{item.produto.descricao}</div>
+                                                        <div className="mt-1 text-sm text-gray-600 py-1">{item.quantidade} x {item.produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
                                                     </>
                                                 ))}
                                                 <div>Valor total: {compra.valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
