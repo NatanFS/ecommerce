@@ -32,7 +32,6 @@ ALLOWED_HOSTS = [
     'localhost',
     "127.0.0.1",
     '.vercel.app',
-    '*'
 ]
 
 # Application definition
@@ -59,6 +58,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = False
+
+CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
 
 ROOT_URLCONF = 'ecommerce.urls'
 
