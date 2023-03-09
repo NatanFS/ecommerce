@@ -17,7 +17,7 @@
           },
         {
             "src": "/(.*)",
-            "dest": "Lume/wsgi.py"
+            "dest": "ecommerce/wsgi.py"
         }
     ]
 }
