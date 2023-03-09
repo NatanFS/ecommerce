@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { api } from "../services/autenticacao";
 
 const AdicionarProdutoForm = () => {
   const [formData, setFormData] = useState({
@@ -9,9 +10,26 @@ const AdicionarProdutoForm = () => {
     imagem: null,
   });
 
+  const [message, setMessage] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Send formData to API or store it in state, etc.
+    const response = api.post('produtos/criar/', formData)
+    .then(response => {
+      console.log(response.data);
+      setMessage("Produto adicionado!");
+      setFormData({
+        nome: "",
+        descricao: "",
+        preco: "",
+        imagem: null,
+      })
+    })
+    .catch(error => {
+      console.error(error);
+      setMessage("Ocorreu um erro ao adicionar o produto.");
+    });
+    console.log(response.data);
     console.log(formData);
   };
 
@@ -19,13 +37,16 @@ const AdicionarProdutoForm = () => {
     const { name, value, files } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: name === "image" ? files[0] : value,
+      [name]: name === "imagem" ? files[0] : value,
     }));
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Adicionar Produto</h2>
+        {message && (
+          <p>{message}</p>
+        )}
       <div className="mb-4">
         <label htmlFor="nome" className="block font-medium mb-2">
           Nome

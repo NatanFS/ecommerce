@@ -7,6 +7,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
+from rest_framework import generics, status
+from api.models import Produto
+from api.serializers import ProdutoSerializer
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -55,3 +58,19 @@ class CadastrarCliente(APIView):
         user.save()
         
         return Response({'message': 'Cliente registrado com sucesso.'}, status=status.HTTP_201_CREATED)
+
+class CriarProduto(generics.CreateAPIView):
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ListaProdutos(generics.ListAPIView):
+    queryset = Produto.objects.all()
+    serializer_class = ProdutoSerializer
