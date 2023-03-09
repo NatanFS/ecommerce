@@ -61,15 +61,17 @@ class CadastrarCliente(APIView):
         return Response({'message': 'Cliente registrado com sucesso.'}, status=status.HTTP_201_CREATED)
 
 class CriarProduto(generics.CreateAPIView):
+    authentication_classes = [TokenAuthentication]
     queryset = Produto.objects.all()
     serializer_class = ProdutoSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print(serializer.errors)
+        if request.user.is_staff:
+            serializer = self.get_serializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ListaProdutos(generics.ListAPIView):
@@ -86,6 +88,7 @@ class ProdutoAPIView(APIView):
         return Response(serializer.data)
 
 class AdicionarItemCarrinhoView(generics.CreateAPIView):
+    authentication_classes = [TokenAuthentication]
     serializer_class = ItemCarrinhoSerializer
     permission_classes = [IsAuthenticated]
 
@@ -99,6 +102,7 @@ class AdicionarItemCarrinhoView(generics.CreateAPIView):
         except Produto.DoesNotExist:
             return Response({"detail": "Produto não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
+        print("hello2")
         item, created = ItemCarrinho.objects.get_or_create(carrinho=carrinho, produto=produto)
         item.quantidade += int(quantidade)
         item.save()
@@ -108,8 +112,8 @@ class AdicionarItemCarrinhoView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get_carrinho(self):
-        carrinho_id = self.kwargs.get('carrinho_id')
-        return get_object_or_404(Carrinho, id=carrinho_id, usuario=self.request.user)
+        carrinho, created = Carrinho.objects.get_or_create(usuario=self.request.user.pk)
+        return carrinho
 
 class RemoverItemCarrinhoView(generics.DestroyAPIView):
     serializer_class = ItemCarrinhoSerializer
@@ -132,22 +136,22 @@ class RemoverItemCarrinhoView(generics.DestroyAPIView):
         carrinho_id = self.kwargs.get('carrinho_id')
         return get_object_or_404(Carrinho, id=carrinho_id, usuario=self.request.user)
 
-
 class CriarPedidoView(generics.CreateAPIView):
+    authentication_classes = [TokenAuthentication]
     serializer_class = PedidoSerializer
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         carrinho = self.get_carrinho()
 
-        if not carrinho.items.exists():
+        if not carrinho.itens.exists():
             return Response({"detail": "Não é possível criar um pedido sem itens."}, status=status.HTTP_400_BAD_REQUEST)
 
-        valor_total = sum(item.quantidade * item.produto.preco for item in carrinho.items.all())
+        valor_total = sum(item.quantidade * item.produto.preco for item in carrinho.itens.all())
 
         pedido = Pedido.objects.create(usuario=request.user, valor_total=valor_total)
 
-        for item in carrinho.items.all():
+        for item in carrinho.itens.all():
             ItemPedido.objects.create(pedido=pedido, produto=item.produto, quantidade=item.quantidade)
             item.delete()
 
@@ -159,6 +163,7 @@ class CriarPedidoView(generics.CreateAPIView):
         return get_object_or_404(Carrinho, usuario=self.request.user)
 
 class FavoritarProdutoView(generics.CreateAPIView, generics.DestroyAPIView):
+    authentication_classes = [TokenAuthentication]
     serializer_class = FavoritoSerializer
     permission_classes = [IsAuthenticated]
 
@@ -177,10 +182,17 @@ class FavoritarProdutoView(generics.CreateAPIView, generics.DestroyAPIView):
         return Response({'message': message}, status=status.HTTP_200_OK)
 
 class ListaItensCarrinhoView(generics.ListAPIView):
-    serializer_class = ItemCarrinhoSerializer
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    serializer_class = ItemCarrinhoSerializer
 
     def get_queryset(self):
         user = self.request.user
         carrinho = Carrinho.objects.filter(usuario=user).last()
         return carrinho.itens.all()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        print(serializer.data)
+        return Response(serializer.data)

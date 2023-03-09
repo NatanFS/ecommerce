@@ -29,19 +29,17 @@ function Layout(props) {
                 <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Início</a></li>
               </Link>
 
-              
+
 
               {authenticated ? (
                 <>
-                  {user && user.is_staff ? (
+                  {user && user.is_staff && (
                     <Link to="/adicionar-produto">
                       <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Cadastrar Produtos</a></li>
-                    </Link> ) : (
-                      <Link to="/perfil">
-                      <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Perfil</a></li>
-                    </Link>
-                    )}
-                  
+                    </Link>)}
+                  <Link to="/perfil">
+                    <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Perfil</a></li>
+                  </Link>
                   <li className="ml-6"><a href="#" onClick={logout} className="text-gray-300 hover:text-white">Sair</a></li>
                 </>
               ) : (
@@ -55,15 +53,17 @@ function Layout(props) {
                 </>
               )}
 
-              <li className="ml-6">
-                <Link to="/checkout">
-                  <IconButton aria-label="Carrinho de compras" color="primary">
-                    <Badge badgeContent={0} color="secondary" className="text-blue-500">
-                      <ShoppingCartIcon />
-                    </Badge>
-                  </IconButton>
-                </Link>
-              </li>
+              {user && !user.is_staff && (
+                <li className="ml-6">
+                  <Link to="/checkout">
+                    <IconButton aria-label="Carrinho de compras" color="primary">
+                      <Badge badgeContent={0} color="secondary" className="text-blue-500">
+                        <ShoppingCartIcon />
+                      </Badge>
+                    </IconButton>
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 

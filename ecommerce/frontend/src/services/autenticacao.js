@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
 
       const response = await api.post('/api-auth-token', formData);
       const { token } = response.data;
-      sessionStorage.setItem('token', token);
+      localStorage.setItem('token', token);
       setAuthenticated(true);
       const userResponse = await api.get('/usuario');
       setUser(userResponse.data);
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     setAuthenticated(false);
     setUser(null);
     window.location.reload();
@@ -52,7 +52,8 @@ const AuthProvider = ({ children }) => {
   }, [authenticated]);
 
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    console.log(token)
     if (token) {
       setAuthenticated(true);
             axios.get('api/usuario', {
@@ -61,7 +62,6 @@ const AuthProvider = ({ children }) => {
                 .then(response => setUser(response.data))
                 .catch(error => {
                     console.error(error);
-                    logout();
                 });
         }
     }, []);

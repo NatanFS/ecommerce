@@ -12,8 +12,7 @@ class CarrinhoSerializer(serializers.ModelSerializer):
         fields = ['id', 'usuario']
 
 class ItemCarrinhoSerializer(serializers.ModelSerializer):
-    produto = serializers.StringRelatedField()
-
+    produto = ProdutoSerializer()
     class Meta:
         model = ItemCarrinho
         fields = ['id', 'carrinho', 'produto', 'quantidade']

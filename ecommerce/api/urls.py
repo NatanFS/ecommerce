@@ -9,8 +9,8 @@ urlpatterns = [
     path('produtos/', views.ListaProdutos.as_view(), name='produto-lista'),
     path('produtos/<int:pk>', views.ProdutoAPIView.as_view(), name="produto"),
     path('produtos/favoritar/<int:pk>/', views.FavoritarProdutoView.as_view(), name='produto-favoritar'),
-    path('carrinho/', views.ListaItensCarrinhoView.as_view(), name='carrinho-itens'),
-    path('carrinho/adicionar/<int:pk>/', views.AdicionarItemCarrinhoView.as_view(), name='carrinho-adicionar'),
-    path('produtos/remover/<int:pk>/', views.RemoverItemCarrinhoView.as_view(), name='carrinho-remover'),
+    path('carrinho/lista', views.ListaItensCarrinhoView.as_view(), name='carrinho'),
+    path('carrinho/adicionar/', views.AdicionarItemCarrinhoView.as_view(), name='carrinho-adicionar'),
+    path('produtos/remover/', views.RemoverItemCarrinhoView.as_view(), name='carrinho-remover'),
     path('pedido/realizar/', views.CriarPedidoView.as_view(), name='fazer_pedido'),
 ]
