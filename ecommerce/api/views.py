@@ -74,3 +74,12 @@ class CriarProduto(generics.CreateAPIView):
 class ListaProdutos(generics.ListAPIView):
     queryset = Produto.objects.all()
     serializer_class = ProdutoSerializer
+
+class ProdutoAPIView(APIView):
+    def get(self, request, id):
+        try:
+            produto = Produto.objects.get(pk=id)
+        except Produto.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = ProdutoSerializer(produto)
+        return Response(serializer.data)

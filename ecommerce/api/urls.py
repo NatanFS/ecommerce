@@ -7,4 +7,5 @@ urlpatterns = [
     path('cadastrar', views.CadastrarCliente.as_view(), name='dados-usuario'),
     path('produtos/criar/', views.CriarProduto.as_view(), name='criar-produto'),
     path('produtos/', views.ListaProdutos.as_view(), name='lista-produtos'),
+    path('produtos/<int:id>', views.ProdutoAPIView.as_view(), name="produto"),
 ]
