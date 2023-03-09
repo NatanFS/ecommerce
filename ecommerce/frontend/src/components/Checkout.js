@@ -46,8 +46,13 @@ const Checkout = ({ }) => {
             <div className="flex justify-between mt-4 gap-2">
                 <div>
                     <p className="inline-block bold mr-2">Total:</p>
-                    <p> {itensCarrinho.reduce((total, item) => total + (item.quantidade * item.produto.preco), 0)
-                            .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                    {itensCarrinho
+                        ? itensCarrinho.reduce(
+                            (total, item) => total + item.quantidade * item.produto.preco,
+                            0
+                        ).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                        : 0
+                    }
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
@@ -75,11 +80,11 @@ const Checkout = ({ }) => {
                         <div className="flex items-center justify-between">
                             <p className="bold">Total: </p>
                             <p> {itensCarrinho.reduce((total, item) => total + (item.quantidade * item.produto.preco), 0)
-                            .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                            </div>
+                                .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                        </div>
                         <div className="flex justify-end gap-2 mt-3">
                             <button
-                                onClick={() => {setShowModal(false)}}
+                                onClick={() => { setShowModal(false) }}
                                 className="bg-white border border-blue-600 text-blue-600 hover: py-2 px-4 rounded">
                                 Voltar
                             </button>
