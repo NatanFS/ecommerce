@@ -3,7 +3,8 @@
         "src": "build_staticfiles.sh",
         "use": "@vercel/static-build@1.0.34",
         "config": {
-          "distDir": "staticfiles_build"
+          "distDir": "staticfiles_build",
+          "maxLambdaSize": "100mb"
         }
       },
       {
