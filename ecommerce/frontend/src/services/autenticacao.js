@@ -6,12 +6,20 @@ const AuthProvider = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
     const [message, setMessage] = useState("")
+    const csrftoken = document.cookie.match(/csrftoken=([\w-]+)/)[1];
+
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post('/api/api-auth-token', {
-                username: email,
-                password: password
+            const formData = new FormData();
+            formData.append('username', email);
+            formData.append('password', password);
+
+            const response = await axios.post('/api/api-auth-token', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-CSRFToken': csrftoken
+                }
             });
             const { token } = response.data;
             localStorage.setItem('token', token);
