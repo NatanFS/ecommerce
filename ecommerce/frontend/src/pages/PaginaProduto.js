@@ -15,7 +15,7 @@ const PaginaProduto = () => {
       }, []);
 
     if (!produto) {
-        return <div>Carregando...</div>
+        return <Layout><div>Carregando...</div></Layout>
     }
     return (
         <Layout>

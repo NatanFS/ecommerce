@@ -1,11 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { IconButton, Badge } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { useAuth } from "../services/autenticacao";
+import { api, useAuth } from "../services/autenticacao";
 
 function Layout(props) {
   const { authenticated, user, logout } = useAuth();
+
+  const [itensCarrinho, setItens] = useState([])
+  const [badgeContent, setbadgeContent] = useState(0)
+
+    useEffect(() => {
+        console.log(authenticated)
+        if (authenticated){
+          api.get('/carrinho/lista')
+              .then(response => {
+                  setItens(response.data)
+                  console.log(response.data)
+              })
+              .catch(error => {
+                  console.error(error);
+              });
+        }
+    }, [authenticated]);
+    
+    useEffect(() => {
+      setbadgeContent(itensCarrinho.length)
+      console.log(itensCarrinho)
+      console.log(itensCarrinho.length)
+  }, [itensCarrinho]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -29,8 +52,6 @@ function Layout(props) {
                 <li className="ml-6"><a href="#" className="text-gray-300 hover:text-white">Início</a></li>
               </Link>
 
-
-
               {authenticated ? (
                 <>
                   {user && user.is_staff && (
@@ -53,11 +74,11 @@ function Layout(props) {
                 </>
               )}
 
-              {user && !user.is_staff && (
+              {(!user || !user.is_staff) && (
                 <li className="ml-6">
                   <Link to="/checkout">
                     <IconButton aria-label="Carrinho de compras" color="primary">
-                      <Badge badgeContent={0} color="secondary" className="text-blue-500">
+                      <Badge badgeContent={badgeContent} color="secondary" className="text-blue-500">
                         <ShoppingCartIcon />
                       </Badge>
                     </IconButton>

@@ -41,7 +41,6 @@ const AuthProvider = ({ children }) => {
     window.location.reload();
   };
 
-  // Add token to default headers of api instance
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
