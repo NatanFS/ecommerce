@@ -31,7 +31,7 @@ const ListaProdutos = () => {
                 <img src={produto.imagem} alt={produto.name} className="w-full h-48 object-contain" />
                 <div className="p-4">
                     <h2 className="font-bold text-lg mb-2">{produto.nome}</h2>
-                    <p className="text-gray-700 text-base">{produto.descricao}</p>
+                    <p className="text-gray-700 text-base truncate line-clamp-3">{produto.descricao}</p>
                     <p className="font-bold text-lg mt-2">{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 </div>
             </Link>
