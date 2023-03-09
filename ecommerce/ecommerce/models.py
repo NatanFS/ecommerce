@@ -16,8 +16,4 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)
 
-class Produto(models.Model):
-    nome = models.CharField("nome", max_length=100, null=False, blank=False)
-    descricao = models.CharField("descricao", max_length=600,  null=False, blank=False)
-    preco = models.FloatField("preço", null=False, blank=False)
-    imagem = models.ImageField()
+
