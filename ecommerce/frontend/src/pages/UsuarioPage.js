@@ -6,21 +6,24 @@ function PerfilUsuarioPage({ }) {
     const { authenticated, user, logout } = useAuth();
     const [usuario, setUsuario] = useState(user);
     const [compras, setCompras] = useState([]);
+
     useEffect(() => {
-        api.get('/usuario')
-            .then(response => setUsuario(response.data))
-            .catch(error => {
-                console.error(error);
-            });
-        api.get('/pedidos/lista')
-            .then(response => {
-                setCompras(response.data)
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, [])
+        if (authenticated && user) {
+            api.get('/usuario')
+                .then(response => setUsuario(response.data))
+                .catch(error => {
+                    console.error(error);
+                });
+            api.get('/pedidos/lista')
+                .then(response => {
+                    setCompras(response.data);
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [authenticated, user]);
 
     console.log(compras)
 
@@ -59,19 +62,19 @@ function PerfilUsuarioPage({ }) {
                                             <li key={compra.id} className="py-4 sm:py-5">
                                                 {compra.itens.map((item) => (
                                                     <>
-                                                    <div key={item.id} className="flex justify-between">
-                                                        <div className="text-sm font-medium text-gray-900">{item.produto.nome}</div>
-                                                        <div className="text-sm text-gray-500">{new Date(compra.data_pedido).toLocaleDateString()}</div>
-                                                    </div>
-                                                    <div className="mt-1 text-sm text-gray-600 truncate line-clamp-2">{item.produto.descricao}</div>
-                                                    <div className="mt-1 text-sm text-gray-600">{item.quantidade} x {item.produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+                                                        <div key={item.id} className="flex justify-between">
+                                                            <div className="text-sm font-medium text-gray-900">{item.produto.nome}</div>
+                                                            <div className="text-sm text-gray-500">{new Date(compra.data_pedido).toLocaleDateString()}</div>
+                                                        </div>
+                                                        <div className="mt-1 text-sm text-gray-600 truncate line-clamp-2">{item.produto.descricao}</div>
+                                                        <div className="mt-1 text-sm text-gray-600">{item.quantidade} x {item.produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
                                                     </>
                                                 ))}
                                                 <div>Valor total: {compra.valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
-                                                <hr/>
+                                                <hr />
 
                                             </li>
-                                            
+
                                         ))}
                                     </ul>
                                 </div>
