@@ -17,7 +17,7 @@ class ItemCarrinho(models.Model):
 class Pedido(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pedidos')
     data_pedido = models.DateTimeField(auto_now_add=True)
-    valor_total = models.DecimalField(max_digits=10, decimal_places=2)
+    valor_total = models.FloatField()
 
 class ItemPedido(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='itens')

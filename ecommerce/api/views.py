@@ -196,3 +196,12 @@ class ListaItensCarrinhoView(generics.ListAPIView):
         serializer = self.serializer_class(queryset, many=True)
         print(serializer.data)
         return Response(serializer.data)
+
+class ListaPedidosView(generics.ListAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = PedidoSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return user.pedidos.all()

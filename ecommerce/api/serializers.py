@@ -17,19 +17,20 @@ class ItemCarrinhoSerializer(serializers.ModelSerializer):
         model = ItemCarrinho
         fields = ['id', 'carrinho', 'produto', 'quantidade']
 
-class PedidoSerializer(serializers.ModelSerializer):
-    items = ItemCarrinhoSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Pedido
-        fields = ['id', 'usuario', 'data_pedido', 'valor_total', 'items']
-
 class ItemPedidoSerializer(serializers.ModelSerializer):
-    produto = serializers.StringRelatedField()
+    produto = ProdutoSerializer()
 
     class Meta:
         model = ItemPedido
-        fields = ['id', 'pedido', 'produto', 'quantidade']
+        fields = ['id', 'produto', 'quantidade']
+
+
+class PedidoSerializer(serializers.ModelSerializer):
+    itens = ItemPedidoSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Pedido
+        fields = ['id', 'data_pedido', 'valor_total', 'itens']
 
 class FavoritoSerializer(serializers.ModelSerializer):
     produto = serializers.StringRelatedField()
