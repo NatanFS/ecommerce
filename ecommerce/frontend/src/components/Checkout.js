@@ -46,7 +46,8 @@ const Checkout = ({ }) => {
             <div className="flex justify-between mt-4 gap-2">
                 <div>
                     <p className="inline-block bold mr-2">Total:</p>
-                    <p className="inline-block">R$ 200,00</p>
+                    <p> {itensCarrinho.reduce((total, item) => total + (item.quantidade * item.produto.preco), 0)
+                            .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
@@ -62,10 +63,10 @@ const Checkout = ({ }) => {
                         {itensCarrinho.map((item) => (
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p>{item.produto.quantidade} x {item.produto.nome}</p>
+                                    <p>{item.quantidade} x {item.produto.nome}</p>
                                 </div>
                                 <div>
-                                    <p>R$ 180,00</p>
+                                    <p>{(item.produto.preco * item.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
                                 </div>
                             </div>
                         ))}
@@ -73,8 +74,9 @@ const Checkout = ({ }) => {
 
                         <div className="flex items-center justify-between">
                             <p className="bold">Total: </p>
-                            <p>R$ 180,00</p>
-                        </div>
+                            <p> {itensCarrinho.reduce((total, item) => total + (item.quantidade * item.produto.preco), 0)
+                            .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                            </div>
                         <div className="flex justify-end gap-2 mt-3">
                             <button
                                 onClick={() => {setShowModal(false)}}

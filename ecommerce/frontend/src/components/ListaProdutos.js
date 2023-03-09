@@ -39,10 +39,10 @@ const ListaProdutos = () => {
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded" onClick={() => adicionarCarrinho(produto)}>
                 Adicionar ao carrinho
                 </button>
-                <div className="pr-2">
+                {/* <div className="pr-2">
                     {produto.favorito && <FavoriteIcon className="text-red-600"/>}
                     {!produto.favorito && <FavoriteBorderIcon className="text-red-600" />}
-                </div>
+                </div> */}
             </div>
             </div>
         

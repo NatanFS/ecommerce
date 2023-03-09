@@ -40,9 +40,9 @@ const PaginaProduto = () => {
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                             Adicionar ao carrinho
                         </button>
-                        <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full ml-2">
+                        {/* <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full ml-2">
                             Favoritar
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
